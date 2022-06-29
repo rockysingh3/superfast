@@ -1,12 +1,17 @@
 require("dotenv").config();
 const express = require("express");
+const cors = require("cors");
+
 
 const db = require("./db");
 
 const app = express();
 
 /* parse the json in the body of the req, the json object coming from client */
+app.use(cors())
 app.use(express.json());
+
+
 
 /* GETS ALL THE RESTAURANTS */
 app.get("/api/v1/restaurants", async (req, res) => {
@@ -14,8 +19,6 @@ app.get("/api/v1/restaurants", async (req, res) => {
   try {
     /* get the data from the db */
     const results = await db.query("select * from restaurants");
-
-    console.log(results);
 
     /* send the data to client */
     res.status(200).json({
