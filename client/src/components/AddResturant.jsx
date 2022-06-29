@@ -1,11 +1,34 @@
 import React from "react";
+import { useContext } from "react";
 import { useState } from "react";
+import RestaurantFinder from "../apis/RestaurantFinder";
+import { RestaurantsContext } from "../context/RestuarantsContext";
 
 const AddResturant = () => {
 
-   const [name, setName] = useState("");
-   const [location, setLocation] = useState("");
-   const [priceRange, setPriceRange] = useState("");
+    const { addRestaurants } = useContext(RestaurantsContext);
+    const [name, setName] = useState("");
+    const [location, setLocation] = useState("");
+    const [priceRange, setPriceRange] = useState("Price Range");
+
+    
+
+
+    const handleSumbit = async (e) => {
+        e.preventDefault();
+        /* sends the data to the server aafter user clicks the button */
+        try {
+            const response = await RestaurantFinder.post("/", {
+                name,
+                location,
+                price_range: priceRange
+            })
+            /* appends the grid with the newly created restaurant updates the state wihtin the context */
+            addRestaurants(response.data.data.restaurants)
+        } catch (err) {
+
+        }
+    }
 
     return (
         <form>
@@ -27,7 +50,7 @@ const AddResturant = () => {
                     </select>
                 </div>
                 <div className="col">
-                    <button type="submit" className="btn btn-primary">
+                    <button onClick={handleSumbit} type="submit" className="btn btn-primary">
                         Add
                     </button>
                 </div>

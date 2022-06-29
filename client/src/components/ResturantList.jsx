@@ -10,15 +10,15 @@ const ResturantList = () => {
 
 
     useEffect(() => {
-
-
+        
+        /* gets all the restaurants from DB everytime the page loads */
         const fetchData = async () => {
 
             try {
                 const response = await RestaurantFinder.get("/")
                 setRestaurants(response.data.data.restaurants);
             } catch (err) {
-
+                console.log(err);
             }
         }
 
