@@ -23,10 +23,10 @@ const AddResturant = () => {
                 location,
                 price_range: priceRange
             })
-            /* appends the grid with the newly created restaurant updates the state wihtin the context */
+            /* appends the grid with the newly created restaurant and updates the state wihtin the context */
             addRestaurants(response.data.data.restaurants)
         } catch (err) {
-
+            console.log(err);
         }
     }
 
