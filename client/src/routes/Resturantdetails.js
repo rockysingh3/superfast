@@ -1,6 +1,9 @@
 import React, { useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import RestaurantFinder from "../apis/RestaurantFinder";
+import AddReview from "../components/AddReviews";
+import Reviews from "../components/Reviews";
+import StarRating from "../components/StarRating";
 import { RestaurantsContext } from "../context/RestuarantsContext";
 
 const Resturantdetails = () => {
@@ -12,7 +15,8 @@ const Resturantdetails = () => {
     const fetchData = async () => {
       try {
         const response = await RestaurantFinder.get(`/${id}`);
-        setSelectedRestaurant(response.data.data.restaurant);
+        /* update the context for the selected restaurant */
+        setSelectedRestaurant(response.data.data);
       } catch (err) {
         console.log(`err in the resturantdetails ${err}`);
       }
@@ -24,7 +28,15 @@ const Resturantdetails = () => {
   return (
     <div>
       <h1 className="text-center">Restaurant Details</h1>
-      {selectedRestaurant && selectedRestaurant.name}
+      {selectedRestaurant && (
+        <>
+        <h1 className="text-center display-1">{selectedRestaurant.restaurant.name}</h1>
+        <div className="mt-3">
+          <Reviews reviews={selectedRestaurant.reviews} />
+          <AddReview />
+        </div>
+        </>
+      )}
     </div>
   );
 };
