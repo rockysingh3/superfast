@@ -31,7 +31,8 @@ const ResturantList = () => {
 
 
     /* deletes one of the resturants in the db and then updates the UI list */
-    const handleDelete = async (id) => {
+    const handleDelete = async (e, id) => {
+        e.stopPropagation()
         try {
            const response = await RestaurantFinder.delete(`/${id}`)
            /* updates the list of restaurants  */
@@ -43,8 +44,13 @@ const ResturantList = () => {
         }
     }
 
-    const handleUpdate = (id) => {
+    const handleUpdate = (e, id) => {
+        e.stopPropagation();
         history(`/restaurants/${id}/update`)
+    }
+
+    const handleRestaurantSelect = (id) => {
+        history(`/restaurants/${id}`)
     }
 
 
@@ -65,16 +71,16 @@ const ResturantList = () => {
 
                     {restaurants && restaurants.map(eachRestaurant => {
                         return (
-                            <tr key={eachRestaurant.id} >
+                            <tr  onClick={() => handleRestaurantSelect(eachRestaurant.id)} key={eachRestaurant.id} >
                                 <td>{eachRestaurant.name}</td>
                                 <td>{eachRestaurant.location}</td>
                                 <td>{"$".repeat(eachRestaurant.price_range)}</td>
                                 <td>reviews</td>
                                 <td>
-                                    <button onClick={() => handleUpdate(eachRestaurant.id)} className="btn btn-warning">Update</button>
+                                    <button onClick={(e) => handleUpdate(e, eachRestaurant.id)} className="btn btn-warning">Update</button>
                                 </td>
                                 <td>
-                                    <button onClick={() => handleDelete(eachRestaurant.id)} className="btn btn-danger">Delete</button>
+                                    <button onClick={(e) => handleDelete(e, eachRestaurant.id)} className="btn btn-danger">Delete</button>
                                 </td>
                             </tr>
                         )
