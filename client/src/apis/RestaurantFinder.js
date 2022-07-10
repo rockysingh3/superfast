@@ -6,7 +6,7 @@ import axios from 'axios';
 
 
 
-// if we are in production baseurl = /api/v1/restaurants
+// if we are in production baseurl = /api/v1/restauran ts
 
 const baseURL = process.env.NODE_ENV === 'production' ? "api/v1/restaurants" : 'http://localhost:3001/api/v1/restaurants'
 
